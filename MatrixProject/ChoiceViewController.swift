@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol ChoiceViewControllerDelegate: AnyObject {
-    func goToWonderland()
-    func goToBedroom()
-}
 
 class ChoiceViewController: UIViewController {
     
     @IBOutlet var redView: UIView!
     @IBOutlet var blueView: UIView!
+    var image = ""
+    var message = ""
     
-    weak var delegate: ChoiceViewControllerDelegate?
+    var goToWonderland: (() -> Void)?
+    var goToBedroom: (() -> Void)?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +28,12 @@ class ChoiceViewController: UIViewController {
     }
 
     @IBAction func chooseRed(_ sender: Any) {
-        delegate?.goToWonderland()
+        self.goToWonderland?()
         navigationController?.popViewController(animated: true)
     }
     
     @IBAction func chooseBlue(_ sender: Any) {
-        delegate?.goToBedroom()
-        dismiss(animated: true, completion: nil)
+        self.goToBedroom?()
         navigationController?.popViewController(animated: true)
     }
     
